@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  # php
+  jcapp:
+    image: jcapp # イメージを指定する 今回はphp 8.0が入っている
+    container_name: jcapp # コンテナの名前を指定する
+    build: ./php # ビルドコンテキスト docker buildを行うときの作業ディレクトリ DockerFileがある場所を指定する
+    volumes:
+      - type: bind
+        source: ../journal-chat
+        target: /var/www/html/journal-chat
+    networks: # 使用するnetworkの指定
+      - journalchat-network
+
+  ## nginx
+  jcweb:
+    image: jc_nginx # イメージを指定する
+    container_name: jcweb
+    ports:
+      - "8082:80"  # ホスト側のポート:コンテナ側のポート
+    build: ./nginx
+    depends_on:
+      - jcapp
+    volumes:
+      - type: bind
+        source: ../journal-chat
+        target: /var/www/html/journal-chat
+    networks: # 使用するnetworkの指定
+      - journalchat-network
+
+  ## mysql
+  jcdb:
+    image: jc_mysql # イメージを指定する
+    container_name: jcdb
+    ports:
+      - "3300:3306"
+    build: ./db
+    depends_on:
+      - jcapp
+    volumes:
+      - type: volume
+        source: mysql-data
+        target: /var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    networks: # 使用するnetworkの指定
+      - journalchat-network
+# dockerネットワークの定義
+networks:
+  journalchat-network:
+volumes:
+    mysql-data:
