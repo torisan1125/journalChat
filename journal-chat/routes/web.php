@@ -19,8 +19,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// // ログイン画面のURL
+// Route
+
 Route::get('/app', function () {
     return view('app');
 });
+
+// ホーム画面
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
