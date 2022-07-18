@@ -5490,30 +5490,32 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var Mypage = function Mypage() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    getPitcherData();
+    getDiaryData();
   }, []);
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
-      pitchers = _useState2[0],
-      setPitchers = _useState2[1];
+      diaries = _useState2[0],
+      setDiaries = _useState2[1];
 
-  var getPitcherData = /*#__PURE__*/function () {
+  var getDiaryData = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default().get("api/foo").then(function (response) {
-                setPitchers(response.data);
-                console.log(response.data); //取得データ確認用のconsole.log()
-                //取得データ確認用のconsole.log()
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get("api/get").then(function (response) {
+                setDiaries(response.data);
               });
 
             case 2:
+              coneole.log(response.data);
+
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -5521,14 +5523,14 @@ var Mypage = function Mypage() {
       }, _callee);
     }));
 
-    return function getPitcherData() {
+    return function getDiaryData() {
       return _ref.apply(this, arguments);
     };
   }();
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
-      children: "\u3053\u3093\u306B\u3061\u306F"
+      children: "\u3053\u3093\u306B\u3061\u306F\u3067\u3059\u306D"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
         type: "text"
@@ -5536,10 +5538,11 @@ var Mypage = function Mypage() {
         type: "submit",
         value: "\u8FFD\u52A0"
       })]
-    }), pitchers.map(function (item) {
-      // console.log(item.name);
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
-        children: item.name
+    }), diaries.map(function (item, index) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
+          children: item['title']
+        }, index)
       });
     })]
   });

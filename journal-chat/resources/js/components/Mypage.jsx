@@ -1,38 +1,39 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 
 export const Mypage = () => {
 
     useEffect(() => {
-        getPitcherData();
+        getDiaryData();
     },[])
 
-    const [pitchers, setPitchers] = useState([]);
+    const [diaries, setDiaries] = useState([]);
 
-    const getPitcherData = async() => {
-        await axios.get("api/foo")
+    const getDiaryData = async() => {
+        await axios.get("api/get")
         .then(response => {
-            setPitchers(response.data);
-            console.log(response.data);//取得データ確認用のconsole.log()
-            //取得データ確認用のconsole.log()
-        })
-        // pitchers用にオブジェクトを配列化する
-
+            setDiaries(response.data);
+        });
+        coneole.log(response.data);
     }
 
     return (
         <div>
-            <h1>こんにちは</h1>
+            <h1>こんにちはですね</h1>
             <form>
                 <input type="text"></input>
                 <input type="submit" value="追加"></input>
             </form>
             {
-                pitchers.map((item) => {
-                    // console.log(item.name);
-                    return <h1>{item.name}</h1>
+                diaries.map((item, index) => {
+                    return(
+                        <div>
+                        <h1 key={index}>{item['title']}</h1>
+                        </div>
+                    )
                 })
             }
         </div>
